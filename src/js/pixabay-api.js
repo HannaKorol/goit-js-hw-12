@@ -1,29 +1,34 @@
-const URL = "https://pixabay.com/api/";
-const API_KEY = "45296804-0fb55f0e1381bd4cbf585a7a5";
+/* Підключення бібліотеки axios - є це простий HTTP-клієнт, що базується на Promise і автоматизує багато рутинних завдань при роботі з HTTP-запитами, а саме дозволяє:
+- зберігати глобальні налаштування, що будуть автоматично додаватися до всіх запитів;
+- автоматично перетворювати дані запиту у формат JSON;
+- парсити дані відповіді з формату JSON;
+- обробляти всі можливі помилки запиту, включаючи 404, та багато іншого.
+- Axios є зручною альтернативою стандартному Fetch API.
+ */
+import axios from 'axios';   
+
+const URL = "https://pixabay.com/api/";                  // шлях до галереї pixabay
+const API_KEY = "45296804-0fb55f0e1381bd4cbf585a7a5";    // ключ що отрімала після реєстрації тут https://pixabay.com/api/docs/#api_search_images
+
+axios.defaults.baseURL = URL;
 
 // Робимо запит на сервер для пошуку колекції картинок
-
-export function fetchImages(query) {
-    const params = new URLSearchParams({
+export async function fetchImages(query, page = 1) {      
+    const params = {
         key: API_KEY,
         q: query,
         image_type: "photo",
         orientation: "horizontal",
-        safesearch: true,  
-    });
+        safesearch: true,
+        pageSize: 15,                                     // pageSize замінює per_Page для цієї галереї
+        page: page,                                            
+    };
 
-    //Метод fetch() - надає набір властивостей і методів, які дозволяють відправляти, отримувати та обробляти ресурси із сервера, вбудований у браузер і доступний через об'єкт window,побудований на промісах. Значення промісу, який повертає метод fetch() — це об'єкт зі службовою інформацією про стан відповіді сервера. Цей об’єкт є екземпляром класу Response
-    //
-    return fetch(`${URL}?${params.toString()}`)    //шлях до даних на бекенді, які необхідно отримати
-    .then(response => {                           //обробка відповіді від сервера
-        if (!response.ok) {                        //Це необхідно для того, щоб fetch() правильно зреагував на статус код 404, який технічно не є помилкою, але для клієнта — це неуспішний результат. Ця помилка показує що данних немає - то навіщо їх оброблювати? Якщо response:false - то відразу переводимо в помилку.
-            throw new Error(response.statusText);      //
-        }
-        return response.json();                   // Залежно від типу отримуваного контенту, використовуються різні методи для перетворення тіла відповіді у дані.  json() — парсить дані у JSON-форматі.  text() — парсить дані у простому текстовому форматі, наприклад .csv (табличні дані).  blob() — парсить дані, що описують файл, наприклад, зображення, аудіо або відео.
-    })
-
-.catch(error => {
+try {
+    const response = await axios.get(URL, {params});      
+    return response.data;
+} catch(error) {
     console.error("Image Search Error:", error);
     throw error;
-});
 }
+};

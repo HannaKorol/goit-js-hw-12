@@ -6,7 +6,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const galleryList = document.querySelector(".gallery-list");
 
-//Відмальовка знайденої картинки
+//Відмальовка знайденої кожної картинки за цією розміткою 
 export function renderImages(images) {
     const markup = images
     .map(({                         //Кожне зображення описується об'єктом, з такими властивостями.

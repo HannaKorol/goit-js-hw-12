@@ -20,9 +20,23 @@
     <button type="submit">Search</button>
   </form>
 
+  <!-- 2) Список картинок. -->
   <ul class="gallery-list"></ul>
+
+  <!-- 3) Індикатор завантаження -->
   <div class="loader hidden"></div>
 
+  <!-- 3) Кнопка "завантажити ще" -->
+  <button type="button" class= "buttonload hidden" data-action="load-more">
+<!-- 4) Спінер на кнопці "завантажити ще" -->
+<i class="fa fa-circle-o-notch fa-spin"></i>  Load more
+   </button>
+
+   <!-- підключення спінера на кнопці "завантажити ще" -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+  <!-- підключення бібліотеки axios -->
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
