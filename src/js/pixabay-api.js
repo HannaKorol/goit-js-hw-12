@@ -20,7 +20,7 @@ export async function fetchImages(query, page = 1) {
         image_type: "photo",
         orientation: "horizontal",
         safesearch: true,
-        pageSize: 15,                                     // pageSize замінює per_Page для цієї галереї
+        per_page: 15,                                     // pageSize замінює per_Page для цієї галереї
         page: page,                                            
     };
 
